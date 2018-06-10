@@ -46,8 +46,8 @@ const (
 var (
 	Token      string
 	Endpoint   string
-	LabelAllow string
 	ApiVersion string
+	LabelAllow string
 )
 
 // ---------------------------------------------------------------------------------------
@@ -59,9 +59,15 @@ func main() {
 	flag.BoolVar(&colors, "colors", false, "force color logging")
 	flag.StringVar(&Token, "token", "", "token for authentication")
 	flag.StringVar(&Endpoint, "endpoint", "/var/run/docker.sock", "docker endpoint")
-	flag.StringVar(&LabelAllow, "label", "whalepost.allow", "label to allow updates")
 	flag.StringVar(&ApiVersion, "api", "1.36", "docker api version")
+	flag.StringVar(&LabelAllow, "label", "whalepost.allow", "label to allow updates")
 	flag.Parse()
+
+	// make sure all config options are set properly
+	if Token == "" || Endpoint == "" || LabelAllow == "" || ApiVersion == "" {
+		flag.Usage()
+		return
+	}
 
 	// setup logger
 	formater := logrus.TextFormatter{ForceColors: colors}
