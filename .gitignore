@@ -1,0 +1,8 @@
+.idea/
+*.crt
+*.key
+*.db
+*.lock
+*.pem
+assets/css/pipeline.css
+assets.min
