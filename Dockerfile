@@ -35,10 +35,7 @@ RUN apk --update --no-cache add ca-certificates tzdata su-exec
 COPY --from=builder /tmp/whalepost /usr/sbin/whalepost
 
 # make binary executable
-RUN chown nobody:nobody /usr/sbin/whalepost && \
-    chown nobody:nobody /entry.sh && \
-    chmod +x /usr/sbin/whalepost && \
-    chmod +x /entry.sh
+RUN chmod +x /usr/sbin/whalepost
 
 EXPOSE 8000
 CMD /usr/sbin/whalepost
