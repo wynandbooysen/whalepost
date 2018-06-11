@@ -90,7 +90,7 @@ func main() {
 	router := mux.NewRouter()
 	router.Path("/robots.txt").HandlerFunc(handlers.NoRobots)
 	r := router.PathPrefix("/api/v1").Subrouter()
-	r.Methods(http.MethodPut).Path("/service/{ServiceId}").
+	r.Methods(http.MethodPost).Path("/service/{ServiceId}").
 		Handler(handlers.ChainFunc(ServiceUpdate, handlers.Keyed(Token)))
 
 	// start the webserver
