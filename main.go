@@ -65,7 +65,7 @@ func main() {
 	flag.StringVar(&Endpoint, "endpoint", "unix:///var/run/docker.sock", "docker endpoint")
 	flag.StringVar(&ApiVersion, "api", "1.36", "docker api version")
 	flag.StringVar(&LabelAllow, "label", "whalepost.allow", "label to allow updates")
-	flag.StringVar(&ConfFile, "conf", "~/.docker/config.json", "path to docker config")
+	flag.StringVar(&ConfFile, "conf", "/config.json", "path to docker config")
 	flag.Parse()
 
 	// make sure all config options are set properly
