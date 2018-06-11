@@ -48,6 +48,9 @@ var (
 	Endpoint   string
 	ApiVersion string
 	LabelAllow string
+	ConfFile   string
+
+	Config *Conf
 )
 
 // ---------------------------------------------------------------------------------------
@@ -56,11 +59,13 @@ var (
 
 func main() {
 	var colors bool
+	var err error
 	flag.BoolVar(&colors, "colors", false, "force color logging")
 	flag.StringVar(&Token, "token", "", "token for authentication")
 	flag.StringVar(&Endpoint, "endpoint", "/var/run/docker.sock", "docker endpoint")
 	flag.StringVar(&ApiVersion, "api", "1.36", "docker api version")
 	flag.StringVar(&LabelAllow, "label", "whalepost.allow", "label to allow updates")
+	flag.StringVar(&ConfFile, "conf", "~/.docker/config.json", "path to docker config")
 	flag.Parse()
 
 	// make sure all config options are set properly
@@ -75,10 +80,18 @@ func main() {
 	logrus.SetOutput(os.Stdout)
 	logrus.Infoln("starting", GetAppVersion())
 
+	// load the config file
+	Config, err = LoadConf(ConfFile)
+	if err != nil {
+		logrus.Warnln("config file not loaded:", err.Error())
+	}
+
 	// setup http routes
 	router := mux.NewRouter()
 	router.Path("/robots.txt").HandlerFunc(handlers.NoRobots)
-	Routes(router.PathPrefix("/api/v1").Subrouter())
+	r := router.PathPrefix("/api/v1").Subrouter()
+	r.Methods(http.MethodPut).Path("/service/{ServiceId}").
+		Handler(handlers.ChainFunc(ServiceUpdate, handlers.Keyed(Token)))
 
 	// start the webserver
 	srv := &http.Server{Addr: HttpListen, Handler: router}
