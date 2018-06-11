@@ -42,5 +42,4 @@ RUN chown nobody:nobody /usr/sbin/whalepost && \
     chmod +x /entry.sh
 
 EXPOSE 8000
-ENTRYPOINT ["/entry.sh"]
 CMD /usr/sbin/whalepost
