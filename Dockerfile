@@ -33,7 +33,6 @@ RUN apk --update --no-cache add ca-certificates tzdata su-exec
 
 # add relevant files to container
 COPY --from=builder /tmp/whalepost /usr/sbin/whalepost
-ADD entry.sh /entry.sh
 
 # make binary executable
 RUN chown nobody:nobody /usr/sbin/whalepost && \
