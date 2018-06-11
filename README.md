@@ -19,4 +19,4 @@ Create the whalepost docker service. Make sure your docker client config is acce
 
 Use curl to test the webhook endpoint:
 
-    $: curl -X POST -d '{"image": "jwilder/whoami", "auth": true}' http://localhost:8000/api/v1/service/test?key=s3cr3t
+    $: curl -X POST -H "Content-Type: application/json" -d '{"image": "jwilder/whoami", "auth": true}' https://localhost:8000/api/v1/service/test?key=s3cr3t
