@@ -62,7 +62,7 @@ func main() {
 	var err error
 	flag.BoolVar(&colors, "colors", false, "force color logging")
 	flag.StringVar(&Token, "token", "", "token for authentication")
-	flag.StringVar(&Endpoint, "endpoint", "/var/run/docker.sock", "docker endpoint")
+	flag.StringVar(&Endpoint, "endpoint", "unix:///var/run/docker.sock", "docker endpoint")
 	flag.StringVar(&ApiVersion, "api", "1.36", "docker api version")
 	flag.StringVar(&LabelAllow, "label", "whalepost.allow", "label to allow updates")
 	flag.StringVar(&ConfFile, "conf", "~/.docker/config.json", "path to docker config")
