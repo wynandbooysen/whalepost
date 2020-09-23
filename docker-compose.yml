@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  whalepost:
+    image: faryon93/whalepost:latest
+    command: ["sh", "-c", "/usr/sbin/whalepost -token=\"$$(cat /run/secrets/whalepost_token)\""]
+    secrets:
+      - whalepost_token
+    ports:
+      - target: 8000
+        published: 8000
+        protocol: tcp
+        mode: host
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/root/.docker/config.json:/config.json"
+    deploy:
+      mode: global
+      update_config:
+        parallelism: 1
+        delay: 15s
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == manager
+
+secrets:
+    whalepost_token:
+        external: true
+  
+
