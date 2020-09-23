@@ -3,7 +3,7 @@ Deploy a new version of your docker service with a simple webhook.
 
 * Registry authentication from Docker client config file
 * Token to secure the deployment endpoint
-* swarm label to allow update only for configured services
+* swarm label to allow update only for configured services ->  ```whalepost.allow: "true"``` 
 
 ## Getting Started
 Create the whalepost docker service. Make sure your docker client config is accessible by the executing swarm node.
